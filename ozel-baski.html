@@ -4,25 +4,80 @@
 <head>
     <meta charset="UTF-8">
     <title>Kişiye Özel Baskı</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body { font-family: Arial, sans-serif; background-color: #000; color: #fff; text-align: center; padding: 20px; }
-        h1 { color: #25d366; }
-        form { display: flex; flex-direction: column; align-items: center; gap: 15px; }
-        input, textarea { width: 80%; padding: 10px; border-radius: 8px; border: none; }
-        button { background-color: #25d366; color: #000; padding: 10px 20px; font-weight: bold; border-radius: 8px; cursor: pointer; }
-        a { color: #25d366; display: block; margin-top: 20px; }
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+        }
+        h1 {
+            color: #fff;
+        }
+        form {
+            width: 100%;
+            max-width: 500px;
+            background-color: #111;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+        }
+        input, textarea, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            background-color: #222;
+            color: #fff;
+            border: 1px solid #444;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #25d366;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
-    <h1>Kişiye Özel Baskı Talep Formu</h1>
-    <form action="https://formspree.io/f/myzwlydd" method="POST" enctype="multipart/form-data">
-        <input type="text" name="name" placeholder="Ad Soyad" required>
-        <input type="email" name="email" placeholder="E-posta Adresi" required>
-        <textarea name="message" rows="4" placeholder="İstediğiniz baskının detaylarını yazın"></textarea>
-        <input type="file" name="upload" accept="image/*">
-        <button type="submit">Gönder</button>
+    <h1>Kişiye Özel Baskı</h1>
+    <form>
+        <label for="name">Ad Soyad</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">E-Posta</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="phone">Telefon Numarası</label>
+        <input type="tel" id="phone" name="phone" required>
+
+        <label for="address">Adres Bilgileri</label>
+        <textarea id="address" name="address" rows="3" required></textarea>
+
+        <label for="product">Ürün Seç</label>
+        <select id="product" name="product" required>
+            <option value="Tişört">Tişört</option>
+            <option value="Sweatshirt">Sweatshirt</option>
+            <option value="Bokser">Bokser</option>
+            <option value="Şort">Şort</option>
+            <option value="Eşofman Altı">Eşofman Altı</option>
+            <option value="Eşofman Üstü">Eşofman Üstü</option>
+            <option value="Bez Çanta">Bez Çanta</option>
+            <option value="Kapüşonlu Hoodie">Kapüşonlu Hoodie</option>
+            <option value="Crop Top">Crop Top</option>
+            <option value="Polar Sweat">Polar Sweat</option>
+        </select>
+
+        <button type="submit">Şimdi Tasarla</button>
     </form>
-    <a href="https://wa.me/905399132540" target="_blank">WhatsApp ile İletişime Geç</a>
-    <a href="index.html">Geri Dön</a>
 </body>
 </html>
