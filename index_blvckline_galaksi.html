@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BLVCKLINE - Hayalini Giy</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: #000;
+      overflow: hidden;
+      font-family: 'Arial', sans-serif;
+      color: #fff;
+      text-align: center;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    .content {
+      position: relative;
+      top: 20%;
+      transform: translateY(-20%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 48px;
+      font-weight: bold;
+      color: #0ff;
+      text-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    .slogan {
+      font-size: 22px;
+      animation: fadeInUp 2s 2s forwards;
+      opacity: 0;
+    }
+
+    .menu a {
+      text-decoration: none;
+      color: #000;
+      background: #fff;
+      padding: 15px 30px;
+      font-size: 18px;
+      border-radius: 10px;
+      font-weight: bold;
+      display: block;
+      width: 250px;
+      margin: 10px auto;
+      transition: all 0.3s ease;
+    }
+
+    .menu a:hover {
+      background: #0ff;
+      color: #000;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #0ff; }
+      to { text-shadow: 0 0 20px #0ff, 0 0 30px #0ff; }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="stars"></canvas>
+  <div class="content">
+    <div class="logo">BLVCKLINE</div>
+    <div class="slogan" id="slogan">Hayalini Giy!</div>
+    <div class="menu">
+      <a href="baski-galerisi.html">Baskı Galerisi</a>
+      <a href="ozel-baski.html">Kişiye Özel Baskı</a>
+      <a href="https://www.shopier.com/BLVCKLINE" target="_blank">Shopier</a>
+    </div>
+  </div>
+
+  <script>
+    const slogans = ["Hayalini Giy!", "Kendini Tasarla!", "Stilinle Konuş!"];
+    let index = 0;
+    setInterval(() => {
+      index = (index + 1) % slogans.length;
+      document.getElementById("slogan").innerText = slogans[index];
+    }, 3000);
+
+    const canvas = document.getElementById('stars');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let stars = [];
+    for (let i = 0; i < 200; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 1.5,
+        speed: Math.random() * 0.5 + 0.2
+      });
+    }
+
+    function animateStars() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#0ff';
+      stars.forEach(star => {
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.radius, 0, 2 * Math.PI);
+        ctx.fill();
+        star.y += star.speed;
+        if (star.y > canvas.height) {
+          star.y = 0;
+          star.x = Math.random() * canvas.width;
+        }
+      });
+      requestAnimationFrame(animateStars);
+    }
+
+    animateStars();
+  </script>
+</body>
+</html>
