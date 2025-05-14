@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Crop Top Tasarımı</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    .preview-container {
+      position: relative;
+      display: inline-block;
+    }
+    .product-img {
+      width: 300px;
+    }
+    .overlay-img {
+      position: absolute;
+      top: 90px;
+      left: 100px;
+      width: 100px;
+      cursor: move;
+    }
+    input[type='file'] {
+      padding: 10px;
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #25d366;
+      color: #000;
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Crop Top Tasarımı Oluştur</h1>
+  <p>Baskı ekle ve ürün üzerinde konumlandır</p>
+
+  <div class="preview-container">
+    <img src="crop_white.png" alt="Crop Top" class="product-img" id="productBase">
+    <img src="" id="overlay" class="overlay-img" alt="Baskı">
+  </div>
+
+  <br>
+  <input type="file" id="upload" accept="image/*">
+
+  <a href="onizleme.html" class="btn">Tasarımı Tamamla</a>
+
+  <script>
+    const overlay = document.getElementById("overlay");
+    const upload = document.getElementById("upload");
+
+    upload.addEventListener("change", function () {
+      const file = upload.files[0];
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        overlay.src = e.target.result;
+      };
+
+      if (file) {
+        reader.readAsDataURL(file);
+      }
+    });
+
+    overlay.onmousedown = function (event) {
+      let shiftX = event.clientX - overlay.getBoundingClientRect().left;
+      let shiftY = event.clientY - overlay.getBoundingClientRect().top;
+
+      function moveAt(pageX, pageY) {
+        overlay.style.left = pageX - shiftX + "px";
+        overlay.style.top = pageY - shiftY + "px";
+      }
+
+      function onMouseMove(event) {
+        moveAt(event.pageX, event.pageY);
+      }
+
+      document.addEventListener("mousemove", onMouseMove);
+
+      overlay.onmouseup = function () {
+        document.removeEventListener("mousemove", onMouseMove);
+        overlay.onmouseup = null;
+      };
+    };
+
+    overlay.ondragstart = function () {
+      return false;
+    };
+  </script>
+</body>
+</html>
