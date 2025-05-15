@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Baskı Galerisi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #25d366;
+        }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .card {
+            background-color: #111;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 0 8px #25d36633;
+        }
+        .card img {
+            width: 100%;
+            border-radius: 8px;
+        }
+        .card h3 {
+            margin: 10px 0;
+            font-size: 18px;
+            color: #25d366;
+        }
+        .card button {
+            margin: 5px;
+            padding: 10px;
+            background-color: #25d366;
+            border: none;
+            color: #000;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        function sepeteEkle(baskiAdi) {
+            let sepet = JSON.parse(localStorage.getItem("sepet")) || [];
+            sepet.push({ baski: baskiAdi });
+            localStorage.setItem("sepet", JSON.stringify(sepet));
+            alert(baskiAdi + " sepete eklendi!");
+        }
+        function baskiyiDene(gorsel) {
+            window.location.href = "tasarla-tisort.html?gorsel=" + encodeURIComponent(gorsel);
+        }
+    </script>
+</head>
+<body>
+    <h1>Baskı Galerisi</h1>
+    <div class="gallery">
+        
+    <div class="card">
+        <img src="baski_1.png.png" alt="Broken Hearts">
+        <h3>Broken Hearts</h3>
+        <button onclick="sepeteEkle('Broken Hearts')">Sepete Ekle</button>
+        <button onclick="baskiyiDene('baski_1.png.png')">Baskıyı Dene</button>
+    </div>
+    
+    <div class="card">
+        <img src="baski_2.png.png" alt="Save That">
+        <h3>Save That</h3>
+        <button onclick="sepeteEkle('Save That')">Sepete Ekle</button>
+        <button onclick="baskiyiDene('baski_2.png.png')">Baskıyı Dene</button>
+    </div>
+    
+    <div class="card">
+        <img src="baski_3.png.png" alt="Mentality">
+        <h3>Mentality</h3>
+        <button onclick="sepeteEkle('Mentality')">Sepete Ekle</button>
+        <button onclick="baskiyiDene('baski_3.png.png')">Baskıyı Dene</button>
+    </div>
+    
+    <div class="card">
+        <img src="baski_4.png.png" alt="Juice WRLD">
+        <h3>Juice WRLD</h3>
+        <button onclick="sepeteEkle('Juice WRLD')">Sepete Ekle</button>
+        <button onclick="baskiyiDene('baski_4.png.png')">Baskıyı Dene</button>
+    </div>
+    
+    <div class="card">
+        <img src="baski_5.png.png" alt="Samurai Blue">
+        <h3>Samurai Blue</h3>
+        <button onclick="sepeteEkle('Samurai Blue')">Sepete Ekle</button>
+        <button onclick="baskiyiDene('baski_5.png.png')">Baskıyı Dene</button>
+    </div>
+    
+    <div class="card">
+        <img src="baski_6.png.png" alt="Universe Wide">
+        <h3>Universe Wide</h3>
+        <button onclick="sepeteEkle('Universe Wide')">Sepete Ekle</button>
+        <button onclick="baskiyiDene('baski_6.png.png')">Baskıyı Dene</button>
+    </div>
+    
+    <div class="card">
+        <img src="baski_7.png.png" alt="Order Burns">
+        <h3>Order Burns</h3>
+        <button onclick="sepeteEkle('Order Burns')">Sepete Ekle</button>
+        <button onclick="baskiyiDene('baski_7.png.png')">Baskıyı Dene</button>
+    </div>
+    
+    <div class="card">
+        <img src="baski_8.png.png" alt="Unshaken Orange">
+        <h3>Unshaken Orange</h3>
+        <button onclick="sepeteEkle('Unshaken Orange')">Sepete Ekle</button>
+        <button onclick="baskiyiDene('baski_8.png.png')">Baskıyı Dene</button>
+    </div>
+    
+    <div class="card">
+        <img src="file-Eb5HuxZzuLew1CGBmJT2AJ.png" alt="Design 9">
+        <h3>Design 9</h3>
+        <button onclick="sepeteEkle('Design 9')">Sepete Ekle</button>
+        <button onclick="baskiyiDene('file-Eb5HuxZzuLew1CGBmJT2AJ.png')">Baskıyı Dene</button>
+    </div>
+    
+    <div class="card">
+        <img src="file-FiqNtHZ8AqGyNXBW9LXEse.png" alt="Design 10">
+        <h3>Design 10</h3>
+        <button onclick="sepeteEkle('Design 10')">Sepete Ekle</button>
+        <button onclick="baskiyiDene('file-FiqNtHZ8AqGyNXBW9LXEse.png')">Baskıyı Dene</button>
+    </div>
+    
+    <div class="card">
+        <img src="file-LP6JCtNLvuut6P5mdGyftu.png" alt="Design 11">
+        <h3>Design 11</h3>
+        <button onclick="sepeteEkle('Design 11')">Sepete Ekle</button>
+        <button onclick="baskiyiDene('file-LP6JCtNLvuut6P5mdGyftu.png')">Baskıyı Dene</button>
+    </div>
+    
+    <div class="card">
+        <img src="file-PxKoEShPcLvKWZRD9GRHp8.png" alt="Design 12">
+        <h3>Design 12</h3>
+        <button onclick="sepeteEkle('Design 12')">Sepete Ekle</button>
+        <button onclick="baskiyiDene('file-PxKoEShPcLvKWZRD9GRHp8.png')">Baskıyı Dene</button>
+    </div>
+    
+    <div class="card">
+        <img src="file-PLRHwHC9DjAx6BWV8LBE48.png" alt="Design 13">
+        <h3>Design 13</h3>
+        <button onclick="sepeteEkle('Design 13')">Sepete Ekle</button>
+        <button onclick="baskiyiDene('file-PLRHwHC9DjAx6BWV8LBE48.png')">Baskıyı Dene</button>
+    </div>
+    
+    <div class="card">
+        <img src="file-TFt1ea3eMZwuHChQo6qT1H.png" alt="Design 14">
+        <h3>Design 14</h3>
+        <button onclick="sepeteEkle('Design 14')">Sepete Ekle</button>
+        <button onclick="baskiyiDene('file-TFt1ea3eMZwuHChQo6qT1H.png')">Baskıyı Dene</button>
+    </div>
+    
+    <div class="card">
+        <img src="file-UHAwfNagC1sDaQLisnjKSC.png" alt="Design 15">
+        <h3>Design 15</h3>
+        <button onclick="sepeteEkle('Design 15')">Sepete Ekle</button>
+        <button onclick="baskiyiDene('file-UHAwfNagC1sDaQLisnjKSC.png')">Baskıyı Dene</button>
+    </div>
+    
+    <div class="card">
+        <img src="file-XAFV4b8s9hq8mgKjjdDKHN.png" alt="Design 16">
+        <h3>Design 16</h3>
+        <button onclick="sepeteEkle('Design 16')">Sepete Ekle</button>
+        <button onclick="baskiyiDene('file-XAFV4b8s9hq8mgKjjdDKHN.png')">Baskıyı Dene</button>
+    </div>
+    
+    <div class="card">
+        <img src="file-N4rEuw8Q5yAF7YawNK7rZC.png" alt="Design 17">
+        <h3>Design 17</h3>
+        <button onclick="sepeteEkle('Design 17')">Sepete Ekle</button>
+        <button onclick="baskiyiDene('file-N4rEuw8Q5yAF7YawNK7rZC.png')">Baskıyı Dene</button>
+    </div>
+    
+    <div class="card">
+        <img src="file-5RerGg5WnHvhCaddU9fNMV.png" alt="Design 18">
+        <h3>Design 18</h3>
+        <button onclick="sepeteEkle('Design 18')">Sepete Ekle</button>
+        <button onclick="baskiyiDene('file-5RerGg5WnHvhCaddU9fNMV.png')">Baskıyı Dene</button>
+    </div>
+    
+    <div class="card">
+        <img src="file-XAFV4b8s9hq8mgKjjdDKHN.png" alt="Design 19">
+        <h3>Design 19</h3>
+        <button onclick="sepeteEkle('Design 19')">Sepete Ekle</button>
+        <button onclick="baskiyiDene('file-XAFV4b8s9hq8mgKjjdDKHN.png')">Baskıyı Dene</button>
+    </div>
+    
+    <div class="card">
+        <img src="file-81vE67DDQZiAckA1Qa9LJJ.png" alt="Design 20">
+        <h3>Design 20</h3>
+        <button onclick="sepeteEkle('Design 20')">Sepete Ekle</button>
+        <button onclick="baskiyiDene('file-81vE67DDQZiAckA1Qa9LJJ.png')">Baskıyı Dene</button>
+    </div>
+    
+    </div>
+</body>
+</html>
