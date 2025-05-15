@@ -1,89 +1,115 @@
-<!DOCTYPE html>
+from pathlib import Path
+import zipfile
+
+# Görsel adlarını ve açıklamalarını eşleştir
+image_data = [
+    ("baski_1.png", "Broken Hearts"),
+    ("baski_2.png", "Save That"),
+    ("baski_3.png", "Mentality"),
+    ("baski_4.png", "Juice WRLD"),
+    ("baski_5.png", "Samurai Blue"),
+    ("baski_6.png", "Universe Wide"),
+    ("baski_7.png", "Order Burns"),
+    ("baski_8.png", "Unshaken Orange"),
+    ("file-Eb5HuxZzuLew1CGBmJT2AJ", "Design 9"),
+    ("file-FiqNtHZ8AqGyNXBW9LXEse", "Design 10"),
+    ("file-LP6JCtNLvuut6P5mdGyftu", "Design 11"),
+    ("file-PxKoEShPcLvKWZRD9GRHp8", "Design 12"),
+    ("file-PLRHwHC9DjAx6BWV8LBE48", "Design 13"),
+    ("file-TFt1ea3eMZwuHChQo6qT1H", "Design 14"),
+    ("file-UHAwfNagC1sDaQLisnjKSC", "Design 15"),
+    ("file-XAFV4b8s9hq8mgKjjdDKHN", "Design 16"),
+    ("file-N4rEuw8Q5yAF7YawNK7rZC", "Design 17"),
+    ("file-5RerGg5WnHvhCaddU9fNMV", "Design 18"),
+    ("file-XAFV4b8s9hq8mgKjjdDKHN", "Design 19"),  # Repetition is intentional if no unique ID is provided
+    ("file-81vE67DDQZiAckA1Qa9LJJ", "Design 20")
+]
+
+# HTML içerik
+cards_html = ""
+for filename, title in image_data:
+    cards_html += f"""
+    <div class="card">
+        <img src="{filename}.png" alt="{title}">
+        <h3>{title}</h3>
+        <button onclick="sepeteEkle('{title}')">Sepete Ekle</button>
+        <button onclick="baskiyiDene('{filename}.png')">Baskıyı Dene</button>
+    </div>
+    """
+
+# Tam HTML dosyası
+full_html = f"""<!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <title>Baskı Galerisi</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      background-color: #000;
-      color: #fff;
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      text-align: center;
-    }
-    h1 {
-      color: #25d366;
-    }
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-      margin-top: 30px;
-    }
-    .card {
-      background-color: #111;
-      padding: 15px;
-      border-radius: 12px;
-      box-shadow: 0 0 8px #25d36633;
-    }
-    .card img {
-      width: 100%;
-      border-radius: 8px;
-    }
-    .card h3 {
-      margin: 10px 0;
-      font-size: 18px;
-      color: #25d366;
-    }
-    .card button {
-      margin: 5px;
-      padding: 10px;
-      background-color: #25d366;
-      border: none;
-      color: #000;
-      font-weight: bold;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-  </style>
-  <script>
-    function sepeteEkle(baskiAdi) {
-      let sepet = JSON.parse(localStorage.getItem("sepet")) || [];
-      sepet.push({ baski: baskiAdi });
-      localStorage.setItem("sepet", JSON.stringify(sepet));
-      alert(baskiAdi + " sepete eklendi!");
-    }
-
-    function baskiyiDene(gorsel) {
-      // Tasarla sayfasına yönlendirme yapılır
-      window.location.href = `tasarla-tisort.html?gorsel=${encodeURIComponent(gorsel)}`;
-    }
-  </script>
+    <meta charset="UTF-8">
+    <title>Baskı Galerisi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {{
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            text-align: center;
+        }}
+        h1 {{
+            color: #25d366;
+        }}
+        .gallery {{
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }}
+        .card {{
+            background-color: #111;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 0 8px #25d36633;
+        }}
+        .card img {{
+            width: 100%;
+            border-radius: 8px;
+        }}
+        .card h3 {{
+            margin: 10px 0;
+            font-size: 18px;
+            color: #25d366;
+        }}
+        .card button {{
+            margin: 5px;
+            padding: 10px;
+            background-color: #25d366;
+            border: none;
+            color: #000;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+        }}
+    </style>
+    <script>
+        function sepeteEkle(baskiAdi) {{
+            let sepet = JSON.parse(localStorage.getItem("sepet")) || [];
+            sepet.push({{ baski: baskiAdi }});
+            localStorage.setItem("sepet", JSON.stringify(sepet));
+            alert(baskiAdi + " sepete eklendi!");
+        }}
+        function baskiyiDene(gorsel) {{
+            window.location.href = "tasarla-tisort.html?gorsel=" + encodeURIComponent(gorsel);
+        }}
+    </script>
 </head>
 <body>
-
-  <h1>Baskı Galerisi</h1>
-  <div class="gallery">
-
-    <!-- Örnek Kart -->
-    <div class="card">
-      <img src="tasarim_1.jpg" alt="Tasarım 1">
-      <h3>Tasarım 1</h3>
-      <button onclick="sepeteEkle('Tasarım 1')">Sepete Ekle</button>
-      <button onclick="baskiyiDene('tasarim_1.jpg')">Baskıyı Dene</button>
+    <h1>Baskı Galerisi</h1>
+    <div class="gallery">
+        {cards_html}
     </div>
-
-    <!-- Diğer tasarımlar bu şekilde çoğaltılabilir -->
-    <div class="card">
-      <img src="tasarim_2.jpg" alt="Tasarım 2">
-      <h3>Tasarım 2</h3>
-      <button onclick="sepeteEkle('Tasarım 2')">Sepete Ekle</button>
-      <button onclick="baskiyiDene('tasarim_2.jpg')">Baskıyı Dene</button>
-    </div>
-
-  </div>
-
 </body>
-</html>
+</html>"""
+
+# Dosyayı kaydet
+output_path = "/mnt/data/baski-galerisi.html"
+Path(output_path).write_text(full_html, encoding="utf-8")
+
+output_path
 
