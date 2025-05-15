@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Baskı Galerisi</title>
+  <script>
+    function sepeteEkle(baskiAdi) {
+      let sepet = JSON.parse(localStorage.getItem("sepet")) || [];
+      sepet.push({baski: baskiAdi});
+      localStorage.setItem("sepet", JSON.stringify(sepet));
+      alert("Sepete eklendi: " + baskiAdi);
+    }
+  </script>
+</head>
+<body>
+  <h1>Baskı Galerisi</h1>
+  <div>
+    <p>Baskı 1</p>
+    <button onclick="sepeteEkle('Baskı 1')">Sepete Ekle</button>
+  </div>
+</body>
+</html>

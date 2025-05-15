@@ -1,107 +1,24 @@
-
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sepetim | BLVCKLINE</title>
-  <style>
-    body {
-      background-color: #000;
-      color: #fff;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 30px;
+  <meta charset="UTF-8">
+  <title>Sepetim</title>
+  <script>
+    function sepetiGoster() {
+      let sepet = JSON.parse(localStorage.getItem("sepet")) || [];
+      let liste = document.getElementById("sepetListesi");
+      liste.innerHTML = "";
+      sepet.forEach((item, index) => {
+        let li = document.createElement("li");
+        li.textContent = item.baski;
+        liste.appendChild(li);
+      });
     }
-    h1 {
-      color: #25d366;
-    }
-    .nav {
-      margin-bottom: 30px;
-    }
-    .nav a {
-      color: #25d366;
-      text-decoration: none;
-      margin: 0 15px;
-      font-weight: bold;
-    }
-    .design-box {
-      background-color: #111;
-      padding: 20px;
-      margin: 20px auto;
-      max-width: 400px;
-      border-radius: 12px;
-    }
-    img {
-      max-width: 100%;
-      border-radius: 10px;
-    }
-    .btn {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 12px 24px;
-      background-color: #25d366;
-      color: #000;
-      text-decoration: none;
-      font-weight: bold;
-      border-radius: 8px;
-    }
-    select {
-      margin-top: 10px;
-      padding: 10px;
-      font-size: 1em;
-      border-radius: 6px;
-    }
-  </style>
+    window.onload = sepetiGoster;
+  </script>
 </head>
 <body>
-  <div class="nav">
-    <a href="index.html">Anasayfa</a>
-    <a href="baski-galerisi.html">Galeri</a>
-    <a href="ozel-baski.html">Tasarla</a>
-  </div>
-
   <h1>Sepetim</h1>
-  <div id="sepetKutusu"></div>
-  <div id="urunSecim" style="display:none">
-    <label for="urun">Ürün Seç:</label>
-    <select id="urun">
-      <option value="Tişört">Tişört</option>
-      <option value="Sweatshirt">Sweatshirt</option>
-      <option value="Crop Top">Crop Top</option>
-      <option value="Şort">Şort</option>
-      <option value="Eşofman Altı">Eşofman Altı</option>
-    </select>
-  </div>
-  <a id="siparisButon" class="btn" style="display:none" href="#" target="_blank">Siparişi WhatsApp'tan Gönder</a>
-
-  <script>
-    const kutu = document.getElementById("sepetKutusu");
-    const siparisButon = document.getElementById("siparisButon");
-    const urunSecim = document.getElementById("urunSecim");
-    const urun = document.getElementById("urun");
-
-    const selectedDesign = localStorage.getItem("selectedDesign");
-
-    if (selectedDesign) {
-      kutu.innerHTML = `
-        <div class="design-box">
-          <img src="${selectedDesign}" alt="Seçilen Tasarım" />
-          <p><strong>Fiyat:</strong> 199₺</p>
-        </div>
-      `;
-      urunSecim.style.display = 'block';
-      siparisButon.style.display = 'inline-block';
-
-      urun.addEventListener('change', () => {
-        const secilenUrun = urun.value;
-        siparisButon.href = \`https://wa.me/905399132540?text=Merhaba%20BLVCKLINE,%20sepetime%20eklediğim%20baskıyı%20\${secilenUrun}%20üzerine%20uygulamak%20istiyorum.%20Görsel:%20\${selectedDesign}\`;
-      });
-
-      siparisButon.href = \`https://wa.me/905399132540?text=Merhaba%20BLVCKLINE,%20sepetime%20eklediğim%20baskıyı%20\${urun.value}%20üzerine%20uygulamak%20istiyorum.%20Görsel:%20\${selectedDesign}\`;
-    } else {
-      kutu.innerHTML = "<p>Sepetiniz boş.</p>";
-    }
-  </script>
+  <ul id="sepetListesi"></ul>
 </body>
 </html>
