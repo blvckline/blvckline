@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Baskı Tasarla</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+      color: #25d366;
+    }
+    .preview-container {
+      position: relative;
+      display: inline-block;
+      margin-top: 20px;
+    }
+    .product-img {
+      width: 300px;
+    }
+    .overlay-img {
+      position: absolute;
+      top: 100px;
+      left: 100px;
+      width: 100px;
+      cursor: move;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Tasarımını Dene</h1>
+  <p>Baskıyı tişört üstüne yerleştir</p>
+
+  <div class="preview-container">
+    <img src="tisort_white.png" alt="Tişört" class="product-img" id="productBase">
+    <img src="" alt="Baskı" class="overlay-img" id="overlay">
+  </div>
+
+  <script>
+    // URL'den görseli al
+    const urlParams = new URLSearchParams(window.location.search);
+    const gorsel = urlParams.get("gorsel");
+    if (gorsel) {
+      document.getElementById("overlay").src = gorsel;
+    }
+
+    // Sürükleme fonksiyonu
+    const overlay = document.getElementById("overlay");
+
+    overlay.onmousedown = function (event) {
+      let shiftX = event.clientX - overlay.getBoundingClientRect().left;
+      let shiftY = event.clientY - overlay.getBoundingClientRect().top;
+
+      function moveAt(pageX, pageY) {
+        overlay.style.left = pageX - shiftX + 'px';
+        overlay.style.top = pageY - shiftY + 'px';
+      }
+
+      function onMouseMove(event) {
+        moveAt(event.pageX, event.pageY);
+      }
+
+      document.addEventListener('mousemove', onMouseMove);
+
+      overlay.onmouseup = function () {
+        document.removeEventListener('mousemove', onMouseMove);
+        overlay.onmouseup = null;
+      };
+    };
+
+    overlay.ondragstart = function () {
+      return false;
+    };
+  </script>
+
+</body>
+  </html>
