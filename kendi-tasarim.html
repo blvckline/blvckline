@@ -1,0 +1,186 @@
+<!DOCTYPE html><html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Kendi Tasarımını Oluştur</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      margin: 0;
+    }
+    select, input[type="file"], .button {
+      margin: 10px;
+      padding: 8px 12px;
+      font-size: 16px;
+    }
+    #canvasWrapper {
+      position: relative;
+      margin: 20px auto;
+      width: 300px;
+      height: 400px;
+      background: #222;
+      border: 2px dashed #25d366;
+      touch-action: none;
+      overflow: hidden;
+    }
+    #canvasWrapper img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      user-select: none;
+      pointer-events: none;
+      transform-origin: center center;
+    }
+    #uploadedImage {
+      display: none;
+      pointer-events: auto;
+      cursor: move;
+      touch-action: none;
+    }
+    .button {
+      background-color: #25d366;
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Kendi Tasarımını Oluştur</h1>  <select id="productType">
+    <option value="tisort">Tişört</option>
+    <option value="crop">Crop Top</option>
+    <option value="sweat">Sweatshirt</option>
+  </select>
+  <select id="productColor">
+    <option value="siyah">Siyah</option>
+    <option value="beyaz">Beyaz</option>
+    <option value="gri">Gri</option>
+  </select>
+  <input type="file" id="imageUpload" accept="image/*">  <div id="canvasWrapper">
+    <img id="productImage" src="tisort_siyah.png" alt="Ürün">
+    <img id="uploadedImage" src="" alt="Yüklendi">
+  </div><button class="button" onclick="gonderFatura()">Tasarımı Faturaya Gönder</button>
+
+  <script>
+    const productImage = document.getElementById('productImage');
+    const uploadedImage = document.getElementById('uploadedImage');
+    const wrapper = document.getElementById('canvasWrapper');
+
+    // Ürün ve renk seçimiyle arka plan güncelle
+    function updateProduct() {
+      const type = document.getElementById('productType').value;
+      const color = document.getElementById('productColor').value;
+      productImage.src = `${type}_${color}.png`;
+    }
+    document.getElementById('productType').addEventListener('change', updateProduct);
+    document.getElementById('productColor').addEventListener('change', updateProduct);
+
+    // Galeriden gelen görsel parametresi
+    const params = new URLSearchParams(window.location.search);
+    const gorsel = params.get('gorsel');
+    window.onload = () => {
+      updateProduct();
+      if (gorsel) {
+        uploadedImage.src = gorsel;
+        uploadedImage.style.display = 'block';
+        uploadedImage.style.transform = 'translate(0px,0px) scale(1)';
+      }
+    };
+
+    // Drag & wheel zoom (mouse)
+    let isDragging = false, startX = 0, startY = 0;
+    let currentScale = 1;
+
+    uploadedImage.addEventListener('mousedown', e => {
+      isDragging = true;
+      startX = e.offsetX;
+      startY = e.offsetY;
+    });
+    document.addEventListener('mouseup', () => { isDragging = false; });
+    document.addEventListener('mousemove', e => {
+      if (isDragging) {
+        const rect = wrapper.getBoundingClientRect();
+        const x = e.clientX - rect.left - startX;
+        const y = e.clientY - rect.top - startY;
+        uploadedImage.style.transform = `translate(${x}px, ${y}px) scale(${currentScale})`;
+      }
+    });
+    uploadedImage.addEventListener('wheel', e => {
+      e.preventDefault();
+      const delta = e.deltaY < 0 ? 1.1 : 0.9;
+      currentScale = Math.max(0.3, Math.min(currentScale * delta, 5));
+      const style = window.getComputedStyle(uploadedImage);
+      const matrix = new WebKitCSSMatrix(style.transform);
+      uploadedImage.style.transform = `translate(${matrix.m41}px, ${matrix.m42}px) scale(${currentScale})`;
+    });
+
+    // Touch events: pinch to zoom & drag
+    let initialDist = null;
+    wrapper.addEventListener('touchstart', e => {
+      if (e.touches.length === 2) {
+        initialDist = Math.hypot(
+          e.touches[0].pageX - e.touches[1].pageX,
+          e.touches[0].pageY - e.touches[1].pageY
+        );
+      }
+    }, { passive: false });
+    wrapper.addEventListener('touchmove', e => {
+      if (e.touches.length === 2 && initialDist) {
+        e.preventDefault();
+        const newDist = Math.hypot(
+          e.touches[0].pageX - e.touches[1].pageX,
+          e.touches[0].pageY - e.touches[1].pageY
+        );
+        const scaleFactor = newDist / initialDist;
+        currentScale = Math.max(0.3, Math.min(currentScale * scaleFactor, 5));
+        const style = window.getComputedStyle(uploadedImage);
+        const matrix = new WebKitCSSMatrix(style.transform);
+        uploadedImage.style.transform = `translate(${matrix.m41}px, ${matrix.m42}px) scale(${currentScale})`;
+        initialDist = newDist;
+      }
+      else if (e.touches.length === 1 && isDragging) {
+        e.preventDefault();
+        const touch = e.touches[0];
+        const rect = wrapper.getBoundingClientRect();
+        const x = touch.clientX - rect.left - startX;
+        const y = touch.clientY - rect.top - startY;
+        uploadedImage.style.transform = `translate(${x}px, ${y}px) scale(${currentScale})`;
+      }
+    }, { passive: false });
+    wrapper.addEventListener('touchend', e => {
+      if (e.touches.length < 2) initialDist = null;
+      isDragging = false;
+    });
+
+    // File input
+    document.getElementById('imageUpload').addEventListener('change', e => {
+      const file = e.target.files[0]; if (!file) return;
+      const reader = new FileReader();
+      reader.onload = evt => {
+        uploadedImage.src = evt.target.result;
+        uploadedImage.style.display = 'block';
+        uploadedImage.style.transform = 'translate(0px,0px) scale(1)';
+        currentScale = 1;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // Fatura gönderme
+    function gonderFatura() {
+      html2canvas(wrapper).then(canvas => {
+        const imgBase64 = canvas.toDataURL('image/png');
+        const url = `fatura.html?tasarim=${encodeURIComponent(imgBase64)}&tip=${encodeURIComponent(document.getElementById('productType').value)}&renk=${encodeURIComponent(document.getElementById('productColor').value)}`;
+        window.open(url, '_blank');
+      });
+    }
+  </script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script></body>
+</html>
