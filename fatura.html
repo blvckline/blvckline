@@ -32,7 +32,7 @@
       <label><input type="checkbox" id="logoToggle"> Logoyu Kaldırmak İstiyorum (+60₺)</label>
     </div>
     <a id="payBtn" href="" class="btn" target="_blank">Ödemeye Geç</a>
-    <a id="waBtn" href="" class="btn" target="_blank">WhatsApp'tan Sipariş Ver</a>
+    <a id="waBtn" href="" class="btn" target="_blank">Rica Notu</a>
   </div>
   <script>
     const params = new URLSearchParams(location.search);
@@ -44,7 +44,7 @@
     const colorMap = {'siyah':'Siyah','beyaz':'Beyaz','gri':'Gri'};
     // Prices
     const priceMap={tisort:199,crop:179,sweat:219};
-    const shipping=20, logoFee=60;
+    const shipping=60, logoFee=60;
     // Set preview and info
     document.getElementById('preview').src=base64;
     document.getElementById('info-type').textContent=nameMap[type]||type;
