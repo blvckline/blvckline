@@ -1,7 +1,10 @@
 let scene, camera, renderer, shirt;
 
-init();
-animate();
+init();const controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.1;
+controls.update();
+animate controls.update();
 
 function init() {
   const container = document.getElementById("canvas-container");
