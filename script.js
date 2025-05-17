@@ -40,5 +40,7 @@ function animate() {
   if (shirt) {
     shirt.rotation.y += 0.005;
   }
+  controls.update(); // ekle bunu
   renderer.render(scene, camera);
-      }
+}
+
